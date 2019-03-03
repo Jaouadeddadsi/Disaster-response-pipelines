@@ -1,14 +1,44 @@
-# Disaster Response Pipeline Project
+# Disaster Response Pipeline
 
-### Instructions:
-1. Run the following commands in the project's root directory to set up your database and model.
+This project was designed to analyze disaster data from [Figure Eight](https://www.figure-eight.com/) in order to build a model for an API that classifies disaster messages.
 
-    - To run ETL pipeline that cleans data and stores in database
-        `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
-    - To run ML pipeline that trains classifier and saves
-        `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
+ The project contain a machine learning pipeline that categorize a message sent during disaster event so we can send the message to an appropriate disaster relief agency.
 
-2. Run the following command in the app's directory to run your web app.
-    `python run.py`
+ The project include  a web app where an emergency worker can input a new message and get classification results in several categories. The web app  display also visualizations of the data.  
 
-3. Go to http://0.0.0.0:3001/
+## Getting Started
+
+
+### Prerequisites
+
+
+### Installing
+
+
+## Running the tests
+
+
+
+### Break down into end to end tests
+
+
+### And coding style tests
+
+
+
+## Deployment
+
+
+## Built With
+
+
+## Author
+
+-   ** Jaouad Eddadsi** - _Initial work_ - [JaouadEddadsi](https://github.com/Jaouadeddadsi)
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
