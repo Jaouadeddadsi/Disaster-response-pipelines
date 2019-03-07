@@ -1,7 +1,6 @@
 # import libraries
 import sys
 import pandas as pd
-import numpy as np
 from sqlalchemy import create_engine
 
 
@@ -26,13 +25,13 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
-    """Function to define variabeles in the Model
+    """Function to clean df data
 
     Args:
-        None
+        df (pandas Dataframe)
 
     return:
-        None
+        df (pandas Dataframe)
     """
 
     # split categories into separate category columns
@@ -53,17 +52,37 @@ def clean_data(df):
     # drop duplicates
     df.drop_duplicates(inplace=True)
 
-    pass
+    return df
 
 
 def save_data(df, database_filename):
-    pass
+    """Function to save df in sqlite database
+
+    Args:
+        df (pandas Dataframe)
+        database_filename (str) database name
+
+    return:
+        None
+    """
+
+    engine = create_engine('sqlite:///'+database_filename)
+    # Split df to multiple dataframe
+    list_df = []
+    i = 0
+    while i < df.shape[0]:
+        list_df.append(df.iloc[i:i+1000, :])
+        i += 1000
+    for data in list_df:
+        data.to_sql(name='Messages', con=engine, index=False,
+                    if_exists='append')
 
 
 def main():
     if len(sys.argv) == 4:
 
-        messages_filepath, categories_filepath, database_filepath = sys.argv[1:]
+        messages_filepath, categories_filepath,\
+            database_filepath = sys.argv[1:]
 
         print('Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}'
               .format(messages_filepath, categories_filepath))
