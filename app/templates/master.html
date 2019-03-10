@@ -58,17 +58,18 @@
             <h1 class="text-center">Overview of Training Dataset</h1>
         </div>
     {% endblock %}
-    <!-- Visualisations -->
- <div class="row">
-    <div class="col-sm-6" >
+
+    <!-- {% for id in ids %} -->
+     <!-- visualizations -->
+     <div class="row">
+    <div class="col-sm-4" style="background-color:white;">
       <div id="{{ids[0]}}"></div>
     </div>
-    <div class="col-sm-6" >
-      <div id="{{ids[0]}}"></div>
+    <div class="col-sm-8" style="background-color:white;">
+      <div id="{{ids[1]}}"></div>
     </div>
   </div>
-
-
+    <!-- {% endfor %} -->
 </div>
 
 <script type="text/javascript">

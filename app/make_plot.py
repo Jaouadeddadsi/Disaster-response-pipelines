@@ -33,12 +33,49 @@ def return_graphs():
     )
 
     layout_one = dict(title='Distribution of Message Genres',
-                      xaxis=dict(title='Genre',),
-                      yaxis=dict(title='Count'),
+                      xaxis=dict(title='Genre',
+                                 tickfont=dict(
+                                     size=12,
+                                     color='black'
+                                 )),
+                      yaxis=dict(title='Count',
+                                 tickfont=dict(
+                                     size=12,
+                                     color='black'
+                                 )),
                       )
+
+    # second chart
+    graph_two = []
+
+    data_cateroy = df.iloc[:, 4:].sum().sort_values(ascending=False)
+    category_name = [category.replace('_', ' ')
+                     for category in data_cateroy.index.tolist()]
+    category_count = data_cateroy.tolist()
+
+    graph_two.append(
+        go.Bar(
+            x=category_name,
+            y=category_count,
+        )
+    )
+
+    layout_two = dict(title='Distribution of Messages Categories',
+                      xaxis=dict(title='',
+                                 tickangle=90,
+                                 tickfont=dict(
+                                     size=12,
+                                     color='black'
+                                 ),),
+                      yaxis=dict(title='Count'),
+                      tickfont=dict(
+                          size=12,
+                          color='black'
+                      ))
 
     # append all charts to the figures list
     graphs = []
     graphs.append(dict(data=graph_one, layout=layout_one))
+    graphs.append(dict(data=graph_two, layout=layout_two))
 
     return graphs
