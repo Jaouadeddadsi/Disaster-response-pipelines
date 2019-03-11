@@ -21,7 +21,7 @@ This project requires **Python 3.x** and the following Python libraries installe
 
 
 ## Files Descriptions
-** app **
+**app**
 - template :
  - master.html: main page of web app
  - go.html: classification result page of web app
@@ -55,7 +55,7 @@ Running train_classifier.py take a long time because of the **Gridsearchcv**. fo
 
 ## Author
 
--   ** Jaouad Eddadsi**   [linkedin](https://www.linkedin.com/in/jaouad-eddadsi-01bb34163/)
+-   **Jaouad Eddadsi**   [linkedin](https://www.linkedin.com/in/jaouad-eddadsi-01bb34163/)
 
 
 ## License
