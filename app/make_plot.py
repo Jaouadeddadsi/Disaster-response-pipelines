@@ -73,9 +73,50 @@ def return_graphs():
                           color='black'
                       ))
 
+    # third chart
+    graph_three = []
+    message_categories = df.iloc[:, 4:].sum(axis=1).value_counts()
+    num_categories = message_categories.index
+    massage_count = message_categories.values
+    graph_three.append(
+        go.Bar(
+            x=num_categories,
+            y=massage_count,
+        )
+    )
+
+    layout_three = dict(title='Distribution of Messages Categories',
+                        xaxis=dict(title='number of categories',
+                                   tickangle=45,
+                                   tickfont=dict(
+                                       size=14,
+                                       color='black'
+                                   ),),
+                        yaxis=dict(title='Count of messages'),
+                        tickfont=dict(
+                            size=14,
+                            color='black'
+                        ))
+
+    # fourth chart
+    graph_four = []
+    labels = ['Train data', 'Test data']
+    values = [19662, 6554]
+    colors = ['#FEBFB3', '#96D38C']
+    graph_four.append(
+        go.Pie(labels=labels, values=values,
+               hoverinfo='label+percent', textinfo='value',
+               textfont=dict(size=20),
+               marker=dict(colors=colors,
+                           line=dict(color='#000000', width=2)))
+    )
+    layout_four = dict(title='Train and test data sizes')
+
     # append all charts to the figures list
     graphs = []
     graphs.append(dict(data=graph_one, layout=layout_one))
     graphs.append(dict(data=graph_two, layout=layout_two))
+    graphs.append(dict(data=graph_three, layout=layout_three))
+    graphs.append(dict(data=graph_four, layout=layout_four))
 
     return graphs
