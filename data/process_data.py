@@ -25,7 +25,7 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
-    """Function to clean df data
+    """Function to clean data
 
     Args:
         df (pandas Dataframe)
@@ -67,15 +67,8 @@ def save_data(df, database_filename):
     """
 
     engine = create_engine('sqlite:///'+database_filename)
-    # Split df to multiple dataframe
-    list_df = []
-    i = 0
-    while i < df.shape[0]:
-        list_df.append(df.iloc[i:i+1000, :])
-        i += 1000
-    for data in list_df:
-        data.to_sql(name='Messages', con=engine, index=False,
-                    if_exists='append')
+    df.to_sql(name='Messages', con=engine, index=False, if_exists='replace',
+              chunksize=100)
 
 
 def main():

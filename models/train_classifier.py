@@ -1,12 +1,10 @@
 import sys
 
-import numpy as np
 import pandas as pd
 from sqlalchemy import create_engine
 import re
 
 # sklearn
-from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.multioutput import MultiOutputClassifier
@@ -28,6 +26,8 @@ nltk.download(['punkt', 'wordnet', 'stopwords',
 
 
 class StartingVerbExtractor(BaseEstimator, TransformerMixin):
+    """ check if sentence start with a verb
+    """
 
     def starting_verb(self, text):
         sentence_list = nltk.sent_tokenize(text)
@@ -51,6 +51,8 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
 
 
 class LenMessageExtractor(BaseEstimator, TransformerMixin):
+    """ calculate the length of messages
+    """
 
     def fit(self, x, y=None):
         return self
@@ -70,7 +72,8 @@ def load_data(database_filepath):
         Y (numpy array) target variables
         category_names (list) category names
     """
-    engine = create_engine('sqlite:///'+database_filepath)
+
+    engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql('Messages', con=engine)
     X = df.message.values
     df.drop(labels=['id', 'message', 'original', 'genre'], axis=1,
@@ -82,14 +85,16 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
-    """Function to
+    """Function to tokenize a message
 
     Args:
-
+        text (str) message
 
     return:
+        tokens (list) a list of words
 
     """
+
     # normalize case and remove punctuation
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
 
@@ -106,14 +111,16 @@ def tokenize(text):
 
 
 def build_model():
-    """Function to
+    """Function to build the trained model
 
     Args:
-
+        None
 
     return:
+        model
 
     """
+
     pipeline = Pipeline([
         ('features', FeatureUnion([
 
@@ -132,16 +139,29 @@ def build_model():
             RandomForestClassifier(
                 n_estimators=10, random_state=42)))
     ])
-    return pipeline
+
+    # parametres
+    parameters = {
+        'clf__estimator__n_estimators': [10, 50, 60, 80, 100],
+        'clf__estimator__min_samples_split': [2, 3, 4]
+    }
+
+    # GridSearchCV
+    cv = GridSearchCV(pipeline, param_grid=parameters, cv=5, verbose=10)
+    return cv
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    """Function to
+    """Function to access the accuracy of the model
 
     Args:
-
+        model trained model
+        X_test (array) features of the test data
+        Y_test (array) labels of the test data
+        category_names (list) list of the categories names
 
     return:
+        None
 
     """
 
@@ -163,12 +183,14 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
-    """ Function to
+    """ Function to save the model in a pickle file
 
     Args:
-
+        model trained model
+        model_filepath (str) path of the file
 
     return:
+        None
 
     """
 

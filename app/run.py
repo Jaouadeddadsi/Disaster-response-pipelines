@@ -28,6 +28,8 @@ app = Flask(__name__)
 
 
 class StartingVerbExtractor(BaseEstimator, TransformerMixin):
+    """ check if sentence start with a verb
+    """
 
     def starting_verb(self, text):
         sentence_list = nltk.sent_tokenize(text)
@@ -51,6 +53,8 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
 
 
 class LenMessageExtractor(BaseEstimator, TransformerMixin):
+    """ calculate the length of messages
+    """
 
     def fit(self, x, y=None):
         return self
@@ -60,14 +64,16 @@ class LenMessageExtractor(BaseEstimator, TransformerMixin):
 
 
 def tokenize(text):
-    """Function to
+    """Function to tokenize a message
 
     Args:
-
+        text (str) message
 
     return:
+        tokens (list) a list of words
 
     """
+
     # normalize case and remove punctuation
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
 
